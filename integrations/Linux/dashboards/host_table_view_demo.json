@@ -1,0 +1,374 @@
+{
+    "name": "机器台账表格视图",
+    "tags": "",
+    "ident": "",
+    "configs": {
+        "links": [
+            {
+                "targetBlank": true,
+                "title": "n9e",
+                "url": "https://n9e.github.io/"
+            },
+            {
+                "targetBlank": true,
+                "title": "author",
+                "url": "http://flashcat.cloud/"
+            }
+        ],
+        "panels": [
+            {
+                "custom": {
+                    "calc": "lastNotNull",
+                    "colorRange": [
+                        "thresholds"
+                    ],
+                    "detailUrl": "/dashboards/linux-host-by-categraf?ident=${__field.labels.ident}",
+                    "textMode": "valueAndName"
+                },
+                "datasourceCate": "prometheus",
+                "datasourceValue": "${prom}",
+                "id": "21b8b3ab-26aa-47cb-b814-f310f2d143aa",
+                "layout": {
+                    "h": 5,
+                    "i": "21b8b3ab-26aa-47cb-b814-f310f2d143aa",
+                    "isResizable": true,
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "maxPerRow": 4,
+                "name": "CPU利用率",
+                "options": {
+                    "standardOptions": {
+                        "util": "percent"
+                    },
+                    "thresholds": {
+                        "steps": [
+                            {
+                                "color": "#ef3c3c",
+                                "type": "",
+                                "value": 95
+                            },
+                            {
+                                "color": "#ff656b",
+                                "type": "",
+                                "value": 85
+                            },
+                            {
+                                "color": "#ffae39",
+                                "type": "",
+                                "value": 75
+                            },
+                            {
+                                "color": "#2c9d3d",
+                                "type": "base",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "targets": [
+                    {
+                        "expr": "cpu_usage_active{cpu=\"cpu-total\", ident=~\"$ident\"}",
+                        "instant": true,
+                        "legend": "{{ident}}",
+                        "refId": "A"
+                    }
+                ],
+                "transformations": [
+                    {
+                        "id": "organize",
+                        "options": {}
+                    }
+                ],
+                "type": "hexbin",
+                "version": "3.0.0"
+            },
+            {
+                "custom": {
+                    "calc": "lastNotNull",
+                    "colorRange": [
+                        "thresholds"
+                    ],
+                    "detailUrl": "/dashboards/linux-host-by-categraf?ident=${__field.labels.ident}",
+                    "textMode": "valueAndName"
+                },
+                "datasourceCate": "prometheus",
+                "datasourceValue": "${prom}",
+                "id": "86d4a502-21f7-4981-9b38-ed8e696b6f49",
+                "layout": {
+                    "h": 5,
+                    "i": "872b2040-c5b0-43fe-92c7-e37cb77edffc",
+                    "isResizable": true,
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "maxPerRow": 4,
+                "name": "内存利用率",
+                "options": {
+                    "standardOptions": {
+                        "util": "percent"
+                    },
+                    "thresholds": {
+                        "steps": [
+                            {
+                                "color": "#ef3c3c",
+                                "type": "",
+                                "value": 95
+                            },
+                            {
+                                "color": "#ff656b",
+                                "type": "",
+                                "value": 85
+                            },
+                            {
+                                "color": "#ffae39",
+                                "type": "",
+                                "value": 75
+                            },
+                            {
+                                "color": "#2c9d3d",
+                                "type": "base",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "targets": [
+                    {
+                        "expr": "mem_used_percent{ident=~\"$ident\"}",
+                        "instant": true,
+                        "legend": "{{ident}}",
+                        "refId": "A"
+                    }
+                ],
+                "transformations": [
+                    {
+                        "id": "organize",
+                        "options": {}
+                    }
+                ],
+                "type": "hexbin",
+                "version": "3.0.0"
+            },
+            {
+                "type": "table",
+                "id": "77bf513a-8504-4d33-9efe-75aaf9abc9e4",
+                "layout": {
+                    "h": 11,
+                    "i": "77bf513a-8504-4d33-9efe-75aaf9abc9e4",
+                    "isResizable": true,
+                    "w": 24,
+                    "x": 0,
+                    "y": 5
+                },
+                "version": "3.0.0",
+                "datasourceCate": "prometheus",
+                "datasourceValue": "${prom}",
+                "targets": [
+                    {
+                        "expr": "avg(cpu_usage_active{cpu=\"cpu-total\", ident=~\"$ident\"}) by (ident)",
+                        "legend": "CPU使用率",
+                        "refId": "A"
+                    },
+                    {
+                        "expr": "avg(mem_used_percent{ident=~\"$ident\"}) by (ident)",
+                        "legend": "内存使用率",
+                        "refId": "B"
+                    },
+                    {
+                        "expr": "avg(mem_total{ident=~\"$ident\"}) by (ident)",
+                        "legend": "总内存",
+                        "refId": "C"
+                    },
+                    {
+                        "expr": "avg(disk_used_percent{ident=~\"$ident\",path=\"/\"}) by (ident)",
+                        "legend": "根分区使用率",
+                        "refId": "D"
+                    }
+                ],
+                "transformations": [
+                    {
+                        "id": "organize",
+                        "options": {
+                            "renameByName": {
+                                "ident": "机器"
+                            }
+                        }
+                    }
+                ],
+                "name": "机器列表",
+                "maxPerRow": 4,
+                "custom": {
+                    "showHeader": true,
+                    "colorMode": "background",
+                    "calc": "lastNotNull",
+                    "displayMode": "labelValuesToRows",
+                    "aggrDimension": "ident",
+                    "sortColumn": "ident",
+                    "sortOrder": "ascend",
+                    "linkMode": "appendLinkColumn",
+                    "links": [
+                        {
+                            "title": "详情",
+                            "url": "/dashboards-built-in/detail?__built-in-cate=Linux&__built-in-name=Linux%20Host%20by%20Categraf&ident=${__field.labels.ident}&prom=1"
+                        }
+                    ]
+                },
+                "options": {
+                    "standardOptions": {}
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "value": "A",
+                            "id": "byFrameRefID"
+                        },
+                        "properties": {
+                            "standardOptions": {
+                                "util": "percent"
+                            },
+                            "valueMappings": [
+                                {
+                                    "match": {
+                                        "to": 65
+                                    },
+                                    "result": {
+                                        "color": "#2c9d3d"
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "match": {
+                                        "to": 90
+                                    },
+                                    "result": {
+                                        "color": "#ff656b"
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "match": {
+                                        "from": 90
+                                    },
+                                    "result": {
+                                        "color": "#f50505"
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "matcher": {
+                            "value": "B",
+                            "id": "byFrameRefID"
+                        },
+                        "properties": {
+                            "standardOptions": {
+                                "util": "percent"
+                            },
+                            "valueMappings": [
+                                {
+                                    "match": {
+                                        "to": 65
+                                    },
+                                    "result": {
+                                        "color": "#2c9d3d"
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "match": {
+                                        "to": 90
+                                    },
+                                    "result": {
+                                        "color": "#ff656b"
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "match": {
+                                        "from": 90
+                                    },
+                                    "result": {
+                                        "color": "#fa0a0a"
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        },
+                        "type": "special"
+                    },
+                    {
+                        "matcher": {
+                            "value": "C",
+                            "id": "byFrameRefID"
+                        },
+                        "properties": {
+                            "standardOptions": {
+                                "decimals": 2,
+                                "util": "bytesIEC"
+                            },
+                            "valueMappings": []
+                        },
+                        "type": "special"
+                    },
+                    {
+                        "matcher": {
+                            "value": "D",
+                            "id": "byFrameRefID"
+                        },
+                        "properties": {
+                            "standardOptions": {
+                                "decimals": 2,
+                                "util": "percent"
+                            },
+                            "valueMappings": [
+                                {
+                                    "match": {
+                                        "to": 90
+                                    },
+                                    "result": {
+                                        "color": "#2c9d3d"
+                                    },
+                                    "type": "range"
+                                },
+                                {
+                                    "match": {
+                                        "from": 90
+                                    },
+                                    "result": {
+                                        "color": "#ff656b"
+                                    },
+                                    "type": "range"
+                                }
+                            ]
+                        },
+                        "type": "special"
+                    }
+                ]
+            }
+        ],
+        "var": [
+            {
+                "definition": "prometheus",
+                "name": "prom",
+                "type": "datasource"
+            },
+            {
+                "allOption": true,
+                "datasource": {
+                    "cate": "prometheus",
+                    "value": "${prom}"
+                },
+                "definition": "label_values(system_load1,ident)",
+                "multi": true,
+                "name": "ident",
+                "type": "query"
+            }
+        ],
+        "version": "3.0.0"
+    }
+}
