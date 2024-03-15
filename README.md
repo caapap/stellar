@@ -36,12 +36,9 @@ make release
 ss -tlnp|grep 17000
 ```
 
-Access web page: 
+  Access web page: 
 
-- `http://localhost:17000` or `http://<server-ip>:17000`
+  - `http://localhost:17000` or `http://<server-ip>:17000`
 
-- username: `root` password:`root.2020`
-make
-make run
-```
+  - username: `root` password:`root.2020`
 
