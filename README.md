@@ -6,58 +6,41 @@
 - Observability: Starting from version V6, it supports integration with ElasticSearch and Jaeger data sources, achieving unified observability of logs, traces, and metrics in multiple dimensions.
 - AiOps: It supports automated operation and maintenance functions, including automatic fault discovery, fault analysis, fault self-healing, script deployment, etc. For experimentally, it provides a set of built-in AI models to help users achieve intelligent operations.
 
-## Usage
+## Quickstart
 
-## Install Dependencies
+- Installation
 
-- Dependencies list 
-```
-go: v1.16.x +
-cmake: v3.21.3 +
-mysql: v5.7 +
-redis: v6.2 +
-docker: v1.19.x +
-```
-- Install
 ```shell
-# install basic dev dependency
-yum -y install gcc gcc-c++ make automake autoconf libtool
-# install go
-wget https://go.dev/dl/go1.22.1.linux-amd64.tar.gz
-sudo rm -rf /usr/local/go && sudo tar xvf go1.22.1.linux-amd64.tar.gz -C /iflytek/server
-export PATH=$PATH:/iflytek/server/go/bin && go version
-
-# config global varibale gopath by editing /etc/profile
-cat << EOF >> /etc/profile			
-# go path begin 
-export GOROOT=/fun/server/go  #go root path
-export GOPATH=/fun/server/gopkg   #go package path
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-export GOPROXY='https://goproxy.cn,direct' #go proxy
-# go path end
-EOF
-
-source /etc/profile  # load the global variable
-go env 	
-
-# install mysql & redis
 yum install mysql-server redis -y
+
 systemctl start mysql
 systemctl start redis
 systemctl enable mysql
 systemctl enable redis
 
-# the default root password for MySQL is set to 1234(recommended) , or you can modify the configuration file `etc/config.toml`.
-grep "1234" etc/config.toml
+mysql -uroot -p < sparrow.sql
 
-# create database by sparrow.sql
-mysql -uroot -p1234 < sparrow.sql
+go mod tidy
+make
+make run
+
+# release
+go install github.com/goreleaser/goreleaser@latest
+make release
 ```
 
-## Build & Run
+- Usage
+
 ```shell
-# install go package by go.mod
-go mod tidy
+# Check whether sparrow.log has exception logs and whether the port is listening. Normally, the port is listening at 17000
+ss -tlnp|grep 17000
+```
+
+Access web page: 
+
+- `http://localhost:17000` or `http://<server-ip>:17000`
+
+- username: `root` password:`root.2020`
 make
 make run
 ```
