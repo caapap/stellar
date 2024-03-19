@@ -97,7 +97,7 @@ Sparrow是一个智能运维平台，旨在帮助用户以更智能的方式管�
 
 - Class or Terminology Explanation
 
-  ```json
+  ```shell
   ➜ # 夜莺的目录结构介绍
   ./
   ├── LICENSE  //开源协议
