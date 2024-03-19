@@ -23,9 +23,9 @@ make release
 
 - 使用
 
-  ```shell
-  ss -tlnp|grep 17000 # Check whether sparrow.log has exception logs and whether the port is listening. Normally, the port is listening at 17000
-  ```
+```shell
+ss -tlnp|grep 17000 # Check whether sparrow.log has exception logs and whether the port is listening. Normally, the port is listening at 17000
+```
 
   - `http://localhost:17000` or `http://<server-ip>:17000`
   - username: `root` password:`root.2020`
