@@ -29,8 +29,8 @@ build-cli:
 	go build -ldflags "-w -s -X github.com/ccfos/nightingale/v6/pkg/version.Version=$(RELEASE_VERSION)" -o n9e-cli ./cmd/cli/main.go
 
 run:
-	nohup ./n9e > n9e.log 2>&1 &
-
+	#nohup ./n9e > n9e.log 2>&1 &
+	./n9e 2>&1 | tee n9e.log
 run-alert:
 	nohup ./n9e-alert > n9e-alert.log 2>&1 &
 
