@@ -1,8 +1,8 @@
 set names utf8mb4;
 
-drop database if exists n9e_v6;
-create database n9e_v6;
-use n9e_v6;
+drop database if exists n9e_v7;
+create database n9e_v7;
+use n9e_v7;
 
 CREATE TABLE `users` (
     `id` bigint unsigned not null auto_increment,
@@ -299,7 +299,7 @@ CREATE TABLE `alert_mute` (
     `cate` varchar(128) not null,
     `cluster` varchar(128) not null,
     `datasource_ids` varchar(255) not null default '' comment 'datasource ids',
-    `tags` varchar(4096) not null default '' comment 'json,map,tagkey->regexp|value',
+    `tags` varchar(4096) default '[]' comment 'json,map,tagkey->regexp|value',
     `cause` varchar(255) not null default '',
     `btime` bigint not null default 0 comment 'begin time',
     `etime` bigint not null default 0 comment 'end time',
