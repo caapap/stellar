@@ -26,10 +26,16 @@ vim ./etc/config.toml
 make
 make run
 
+- 版本包发布
 
-# release
+```shell
+# 二进制发布
 go install github.com/goreleaser/goreleaser@latest
 make release
+
+# docker发布
+vim build.sh # 修改打包的镜像标签
+sh build.sh <tag> # 制作镜像
 ```
 
 - 使用
