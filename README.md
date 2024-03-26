@@ -1,8 +1,7 @@
-## 快速开始
-
-- 部署
+## 开发环境部署
 
 ```shell
+# 二进制部署依赖
 yum install mysql-server redis -y
 
 systemctl start mysql
@@ -12,9 +11,21 @@ systemctl enable redis
 
 mysql -uroot -p < sparrow.sql
 
+# docker部署依赖
+docker run --name mysql-8 -e MYSQL_ROOT_PASSWORD=1234 -p 3306:3306 -d docker.kxdigit.com/n9e/mysql:8
+docker run --name redis-6.2 -p 6379:6379 -d docker.kxdigit.com/n9e/redis:6.2
+
+# go下载安装依赖
 go mod tidy
+
+# 注入编译好的前端包
+cp -r pub .
+# 检查配置参数
+vim ./etc/config.toml
+# 本地编译并运行
 make
 make run
+
 
 # release
 go install github.com/goreleaser/goreleaser@latest
